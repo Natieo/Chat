@@ -7,7 +7,7 @@ public class Server
   public static Socket myClient;
   public static DataInputStream IN;
   public static DataOutputStream OUT;
-  public static main(String args[])
+  public static void main(String args[])
   {
     try//Create a Server on a port defined at the start
     {
@@ -25,15 +25,39 @@ public class Server
     }
     try//Make the Data Stream
     {
-      IN = new DataInputStream(myServer.getInputStream());
+      IN = new DataInputStream(myClient.getInputStream());
     }catch(IOException e)
     {
       e.printStackTrace();
     }
     try//Make Output stream
     {
-      OUT = new DataOutputStream(myServer.getOutputStream());
+      OUT = new DataOutputStream(myClient.getOutputStream());
     }catch(IOException e)
+    {
+      e.printStackTrace();
+    }
+    try
+    {
+      OUT.writeInt(5);
+    }catch(IOException e)
+    {
+      e.printStackTrace();
+    }
+    try
+    {
+      System.out.println(IN.readInt());
+    }catch(Exception e)
+    {
+      e.printStackTrace();
+    }
+    try
+    {
+      OUT.close();
+      IN.close();
+      myClient.close();
+      myServer.close();
+    }catch(Exception e)
     {
       e.printStackTrace();
     }
